@@ -39,23 +39,26 @@ package com.example.CleanGreenIndore;
                 String query = "SELECT * FROM Volunteers";
                 PreparedStatement stmt = connection.prepareStatement(query);
                 ResultSet rs = stmt.executeQuery();
+        
+                // Check if ResultSet has any data
                 if (!rs.isBeforeFirst()) {
                     System.out.println("No Volunteer found in the database.");
-    
-                while (rs.next()) {
-                    System.out.println("Volunteer ID: " + rs.getInt("id"));
-                    System.out.println("Name: " + rs.getString("name"));
-                    System.out.println("Contact: " + rs.getString("contact"));
-                    System.out.println("Email: " + rs.getString("email"));
-                    System.out.println("=================================");
+                } else {
+                    // Process each row and display the data
+                    while (rs.next()) {
+                        System.out.println("Volunteer ID: " + rs.getInt("id"));
+                        System.out.println("Name: " + rs.getString("name"));
+                        System.out.println("Contact: " + rs.getString("contact"));
+                        System.out.println("Email: " + rs.getString("email"));
+                        System.out.println("=================================");
+                    }
                 }
-            } 
-        }
-            catch (SQLException e) {
+            } catch (SQLException e) {
                 System.out.println("DataBase is Empty!!!");
                 e.printStackTrace();
             }
         }
+        
     
         // Method to update a volunteer
         public void updateVolunteer() {
