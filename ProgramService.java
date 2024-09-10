@@ -39,28 +39,31 @@ public class ProgramService{           //Add new program funtion
         }
     }
     //Display Function
-        public void displayAllPrograms() {
+    public void displayAllPrograms() {
         try (Connection connection = DataBaseConnection.getConnection()) {
             String query = "SELECT * FROM Programs";
             Statement stmt = connection.createStatement();
             ResultSet rs = stmt.executeQuery(query);
+            
+            // Check if ResultSet has any data
             if (!rs.isBeforeFirst()) {
                 System.out.println("No programs found in the database.");
-             while (rs.next()) {
-                System.out.println("Program ID: " + rs.getInt("P_id"));
-                System.out.println("Name: " + rs.getString("Program_Name"));
-                System.out.println("Date: " + rs.getString("Date"));
-                System.out.println("Location: " + rs.getString("Location"));
-                System.out.println("Description: " + rs.getString("Description"));
-                System.out.println("=================================");
+            } else {
+                // Process each row and display the data
+                while (rs.next()) {
+                    System.out.println("Program ID: " + rs.getInt("P_id"));
+                    System.out.println("Name: " + rs.getString("Program_Name"));
+                    System.out.println("Date: " + rs.getString("Date"));
+                    System.out.println("Location: " + rs.getString("Location"));
+                    System.out.println("Description: " + rs.getString("Description"));
+                    System.out.println("=================================");
+                }
             }
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
     }
     
-        catch (SQLException e) {
-            e.printStackTrace();
-        }
-        }
 //update function
 public void updateProgram() {
     try (Connection connection = DataBaseConnection.getConnection()) {
